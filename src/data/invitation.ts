@@ -11,10 +11,10 @@ import type { InvitationData } from "../types";
 export const invitationData: InvitationData = {
   brideNickname: "Intan",
   groomNickname: "Wira",
-  brideFullName: "Ni Kadek Ayu Larasati",
-  groomFullName: "I Made Wira Kusuma",
-  brideParents: "Putri dari Bapak I Wayan Suarta & Ibu Ni Nyoman Sari",
-  groomParents: "Putra dari Bapak I Ketut Darmawan & Ibu Ni Made Yuliani",
+  brideFullName: "Intan Pradiska",
+  groomFullName: "Kadek Wira Arya Dharma",
+  brideParents: "Putri dari Bapak ..... & Ibu .....",
+  groomParents: "Putra dari Bapak ..... & Ibu .....",
   brideInstagram: "https://instagram.com/",
   groomInstagram: "https://instagram.com/",
 
@@ -98,14 +98,14 @@ export const invitationData: InvitationData = {
   bankAccounts: [
     {
       id: "bank-1",
-      bankName: "Bank BCA",
-      accountName: "Ni Kadek Ayu Larasati",
+      bankName: "Bank BRI",
+      accountName: "Kadek Wira Arya Dharma",
       accountNumber: "1234567890",
     },
     {
       id: "bank-2",
-      bankName: "Bank Mandiri",
-      accountName: "I Made Wira Kusuma",
+      bankName: "Dana | ShopeePay | Gopay",
+      accountName: "Kadek Wira Arya Dharma",
       accountNumber: "0987654321",
     },
   ],

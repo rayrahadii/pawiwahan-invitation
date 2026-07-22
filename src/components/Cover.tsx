@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { invitationData } from "../data/invitation";
-import { GapuraSilhouette } from "./GapuraSilhouette";
+import { CoverParticles } from "./CoverParticles";
 
 interface CoverProps {
   guestName: string;
@@ -16,9 +16,14 @@ export function Cover({ guestName, onOpen }: CoverProps) {
       initial={{ opacity: 1 }}
       exit={{ opacity: 0, transition: { duration: 0.7, ease: "easeInOut" } }}
     >
-      <div className="cover-gapura">
-        <GapuraSilhouette />
+      {/* Portrait background photo with dark overlay */}
+      <div className="cover-bg">
+        <img src="/images/cover-bg.jpg" alt="" className="cover-bg-img" />
+        <div className="cover-bg-overlay" />
       </div>
+
+      {/* Floating golden particles */}
+      <CoverParticles count={25} />
 
       <div className="cover-content">
         <motion.span

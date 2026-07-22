@@ -45,7 +45,7 @@ function App() {
           {!isOpened && <Cover guestName={guestName} onOpen={() => setIsOpened(true)} />}
         </AnimatePresence>
 
-        <Hero />
+        <Hero isOpened={isOpened} />
         <Quote />
         <Couple />
         <EventDetails />

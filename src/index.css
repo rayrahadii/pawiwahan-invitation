@@ -275,16 +275,77 @@ a {
   }
 }
 
-.cover-gapura {
+.cover-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
-  opacity: 0.9;
+  overflow: hidden;
+}
+
+.cover-bg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+.cover-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 8, 6, 0.78) 0%,
+    rgba(10, 8, 6, 0.62) 40%,
+    rgba(10, 8, 6, 0.70) 70%,
+    rgba(10, 8, 6, 0.85) 100%
+  );
+}
+
+.cover-particles {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cover-particle {
+  position: absolute;
+  bottom: -8px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(232, 196, 104, 0.9) 0%,
+    rgba(201, 162, 39, 0.4) 60%,
+    transparent 100%
+  );
+  box-shadow: 0 0 6px 1px rgba(232, 196, 104, 0.3);
+  animation: particle-float linear infinite;
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: var(--particle-opacity, 0.5);
+  }
+  50% {
+    transform: translateY(-50vh) translateX(var(--drift, 0px));
+  }
+  90% {
+    opacity: var(--particle-opacity, 0.5);
+  }
+  100% {
+    transform: translateY(-110vh) translateX(calc(var(--drift, 0px) * 0.5));
+    opacity: 0;
+  }
 }
 
 .cover-content {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -342,7 +403,8 @@ a {
    HERO
    ========================================================================== */
 .hero {
-  min-height: 100vh;
+  min-height: 100vh; /* fallback for older browsers */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -396,7 +458,7 @@ a {
 
 .hero-scroll-cue {
   position: absolute;
-  bottom: 36px;
+  bottom: calc(36px + env(safe-area-inset-bottom, 0px));
   z-index: 1;
   display: flex;
   flex-direction: column;
