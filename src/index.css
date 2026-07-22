@@ -1,0 +1,1069 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Palette: black + charcoal + antique gold + a brighter yellow-gold accent —
+   evokes carved temple stone (ukiran) and gold leaf (prada) rather than the
+   pastel/ivory look of a typical Javanese invitation. Two dark tones
+   (onyx / graphite) alternate for section rhythm instead of dark/light.
+   ========================================================================== */
+:root {
+  --color-onyx: #100f0d;
+  --color-charcoal: #201e1a;
+  --color-charcoal-2: #2a2723;
+  --color-graphite: #3a362f;
+  --color-gold: #c9a227;
+  --color-gold-bright: #e8c468;
+  --color-gold-deep: #8c6a3f;
+  --color-yellow: #e1b837;
+  --color-cream: #ede6d6;
+  --color-cream-soft: #b9b2a0;
+  --color-hairline: rgba(201, 162, 39, 0.35);
+
+  --font-display: "Cinzel", "Georgia", serif;
+  --font-ornamental: "Cinzel Decorative", "Georgia", serif;
+  --font-body: "Jost", "Segoe UI", sans-serif;
+
+  --frame-width: 480px;
+  --section-padding-y: clamp(64px, 12vh, 96px);
+  --section-padding-x: clamp(24px, 6vw, 40px);
+
+  --ease-signature: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto; /* Lenis takes over smooth scrolling in JS */
+}
+
+body {
+  margin: 0;
+  background: var(--color-onyx);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   LAYOUT SHELL
+   ========================================================================== */
+.invitation-shell {
+  max-width: var(--frame-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  position: relative;
+  background: var(--color-charcoal);
+  overflow: hidden;
+}
+
+@media (min-width: 540px) {
+  .invitation-shell {
+    box-shadow: 0 40px 100px -30px rgba(0, 0, 0, 0.85);
+    border-left: 1px solid var(--color-gold-deep);
+    border-right: 1px solid var(--color-gold-deep);
+  }
+
+  .app-backdrop {
+    background: radial-gradient(circle at 50% 0%, #1c1a16 0%, var(--color-onyx) 65%);
+    min-height: 100vh;
+    padding: 24px 0;
+  }
+}
+
+.section {
+  position: relative;
+  padding: var(--section-padding-y) var(--section-padding-x);
+}
+
+.section--dark {
+  background: linear-gradient(180deg, var(--color-onyx) 0%, #0a0908 100%);
+  color: var(--color-cream);
+}
+
+.section--ivory {
+  /* second tone in the alternating rhythm — still dark, just a shade lighter */
+  background: linear-gradient(180deg, var(--color-charcoal) 0%, var(--color-charcoal-2) 100%);
+  color: var(--color-cream);
+}
+
+/* Applied alongside .section--dark / .section--ivory on a handful of
+   sections to add an atmospheric carved-stone / gold-fleck backdrop. */
+.section--textured {
+  background-image: linear-gradient(180deg, rgba(16, 15, 13, 0.82) 0%, rgba(16, 15, 13, 0.92) 100%),
+    url("/images/texture-stone.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.section-eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.section-title {
+  font-size: clamp(26px, 7.5vw, 32px);
+  text-align: center;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-gold-bright);
+}
+
+.section-body {
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--color-cream-soft);
+}
+
+/* ==========================================================================
+   CARVED CORNER ORNAMENT — reusable "picture frame" corners applied to
+   cards, evoking temple-relief carved corners. See CarvedCorner.tsx.
+   ========================================================================== */
+.carved-frame {
+  position: relative;
+}
+
+.carved-corner {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  color: var(--color-gold);
+  pointer-events: none;
+}
+
+.carved-corner--tl {
+  top: 6px;
+  left: 6px;
+}
+
+.carved-corner--tr {
+  top: 6px;
+  right: 6px;
+  transform: scaleX(-1);
+}
+
+.carved-corner--bl {
+  bottom: 6px;
+  left: 6px;
+  transform: scaleY(-1);
+}
+
+.carved-corner--br {
+  bottom: 6px;
+  right: 6px;
+  transform: scale(-1, -1);
+}
+
+/* ==========================================================================
+   BUTTONS
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 30px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  font-family: var(--font-display);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.35s var(--ease-signature), box-shadow 0.35s var(--ease-signature),
+    background 0.35s ease, color 0.35s ease;
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: linear-gradient(180deg, var(--color-gold-bright) 0%, var(--color-gold) 100%);
+  color: var(--color-onyx);
+  box-shadow: 0 10px 24px -10px rgba(201, 162, 39, 0.6);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 14px 28px -10px rgba(201, 162, 39, 0.8);
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-gold);
+  color: var(--color-gold-bright);
+}
+
+.btn-outline:hover {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ==========================================================================
+   COVER (gate screen)
+   ========================================================================== */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: var(--color-onyx);
+  color: var(--color-cream);
+  padding: 32px;
+  max-width: var(--frame-width);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+@media (min-width: 540px) {
+  .cover {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.cover-gapura {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.9;
+}
+
+.cover-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cover-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+.cover-names {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(38px, 12vw, 52px);
+  letter-spacing: 0.05em;
+  line-height: 1.25;
+  color: var(--color-gold-bright);
+  margin: 18px 0;
+  text-shadow: 0 2px 18px rgba(232, 196, 104, 0.25);
+}
+
+.cover-date {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--color-cream-soft);
+  margin-bottom: 32px;
+}
+
+.cover-guest-card {
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  padding: 16px 26px;
+  margin-bottom: 32px;
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.cover-guest-label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.cover-guest-name {
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--color-cream);
+}
+
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 6px;
+  overflow: hidden;
+}
+
+.hero-gapura {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.85;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 10px;
+}
+
+.hero-names {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 13vw, 58px);
+  letter-spacing: 0.04em;
+  color: var(--color-gold-bright);
+  line-height: 1.25;
+}
+
+.hero-date-pill {
+  margin-top: 26px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  color: var(--color-cream-soft);
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
+  padding: 12px 0;
+}
+
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 36px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-cream-soft);
+}
+
+/* ==========================================================================
+   ORNAMENT DIVIDER (signature motif)
+   ========================================================================== */
+.ornament-divider {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto 28px;
+  width: 160px;
+}
+
+.ornament-divider--flip {
+  transform: scaleY(-1);
+}
+
+/* ==========================================================================
+   QUOTE
+   ========================================================================== */
+.quote-lead {
+  font-family: var(--font-display);
+  font-size: 20px;
+  line-height: 1.8;
+  text-align: center;
+  font-style: italic;
+  color: var(--color-cream);
+  margin-bottom: 18px;
+}
+
+.quote-source {
+  display: block;
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+}
+
+/* ==========================================================================
+   COUPLE
+   ========================================================================== */
+.couple-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 34px 20px;
+  margin: 0 auto 8px;
+  max-width: 340px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.couple-portrait {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid var(--color-gold);
+  padding: 5px;
+}
+
+.couple-portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.couple-name {
+  font-size: 24px;
+  letter-spacing: 0.03em;
+  color: var(--color-gold-bright);
+}
+
+.couple-parents {
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--color-cream-soft);
+  max-width: 280px;
+}
+
+.couple-instagram {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--color-gold-bright);
+  text-decoration: none;
+  border: 1px solid var(--color-hairline);
+  border-radius: 999px;
+  padding: 8px 18px;
+}
+
+.couple-ampersand {
+  font-family: var(--font-ornamental);
+  font-size: 30px;
+  color: var(--color-gold);
+  line-height: 1;
+  display: block;
+  margin: 20px 0;
+}
+
+/* ==========================================================================
+   EVENT DETAILS + COUNTDOWN
+   ========================================================================== */
+.countdown {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 8px 0 44px;
+}
+
+.countdown-unit {
+  width: 68px;
+  padding: 14px 0;
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  text-align: center;
+  background: rgba(201, 162, 39, 0.05);
+}
+
+.countdown-number {
+  font-family: var(--font-display);
+  font-size: 26px;
+  color: var(--color-gold-bright);
+  display: block;
+  font-variant-numeric: tabular-nums;
+}
+
+.countdown-label {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-cream-soft);
+}
+
+.event-card {
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  padding: 30px 24px;
+  margin-bottom: 22px;
+  text-align: center;
+  background: rgba(16, 15, 13, 0.35);
+}
+
+.event-card-title {
+  font-size: 21px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-gold-bright);
+  margin-bottom: 12px;
+}
+
+.event-card-row {
+  font-size: 13px;
+  color: var(--color-cream-soft);
+  line-height: 1.8;
+  margin-bottom: 4px;
+}
+
+.event-card-venue {
+  font-family: var(--font-display);
+  font-size: 17px;
+  color: var(--color-gold);
+  margin-top: 12px;
+}
+
+.event-card-address {
+  font-size: 12.5px;
+  color: var(--color-cream-soft);
+  margin-bottom: 18px;
+}
+
+.event-card-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ==========================================================================
+   LOVE STORY TIMELINE
+   ========================================================================== */
+.timeline {
+  position: relative;
+  padding-left: 28px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+  background: var(--color-hairline);
+}
+
+.timeline-item {
+  position: relative;
+  padding-bottom: 36px;
+}
+
+.timeline-item:last-child {
+  padding-bottom: 0;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -28px;
+  top: 4px;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  box-shadow: 0 0 0 4px var(--color-charcoal-2);
+}
+
+.timeline-year {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  color: var(--color-gold);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.timeline-title {
+  font-size: 19px;
+  color: var(--color-gold-bright);
+  margin-bottom: 6px;
+}
+
+.timeline-description {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--color-cream-soft);
+}
+
+/* ==========================================================================
+   GALLERY
+   ========================================================================== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.gallery-grid button {
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease-signature);
+}
+
+.gallery-grid button:hover img {
+  transform: scale(1.08);
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  background: rgba(6, 6, 5, 0.95);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.lightbox img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 4px;
+  object-fit: contain;
+  border: 1px solid var(--color-hairline);
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  background: rgba(201, 162, 39, 0.08);
+  border: 1px solid var(--color-hairline);
+  color: var(--color-gold-bright);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.lightbox-close {
+  top: 20px;
+  right: 20px;
+}
+
+.lightbox-nav--prev {
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-nav--next {
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* ==========================================================================
+   FORMS (RSVP + Wishes)
+   ========================================================================== */
+.form-field {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.form-label {
+  display: block;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: var(--color-gold);
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 4px;
+  border: 1px solid var(--color-hairline);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-cream);
+  font-family: var(--font-body);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.25s ease;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #6b6355;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  border-color: var(--color-gold);
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.attendance-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.attendance-option {
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  padding: 10px 4px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-cream-soft);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.attendance-option[aria-pressed="true"] {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+  border-color: var(--color-gold);
+}
+
+.form-note {
+  font-size: 12px;
+  color: var(--color-cream-soft);
+  margin-top: 14px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   GIFT / BANK CARDS
+   ========================================================================== */
+.bank-card {
+  border: 1px solid var(--color-hairline);
+  border-radius: 4px;
+  padding: 20px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: rgba(16, 15, 13, 0.35);
+}
+
+.bank-card-info {
+  text-align: left;
+}
+
+.bank-card-bank {
+  font-family: var(--font-display);
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  color: var(--color-gold-bright);
+  margin-bottom: 6px;
+}
+
+.bank-card-name {
+  font-size: 13px;
+  color: var(--color-cream-soft);
+}
+
+.bank-card-number {
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-cream);
+}
+
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--color-gold);
+  color: var(--color-gold-bright);
+  background: transparent;
+  border-radius: 999px;
+  padding: 9px 14px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.copy-btn[data-copied="true"] {
+  background: var(--color-gold);
+  color: var(--color-onyx);
+}
+
+/* ==========================================================================
+   WISHES
+   ========================================================================== */
+.wish-card {
+  border-bottom: 1px solid var(--color-hairline);
+  padding: 18px 0;
+  text-align: left;
+}
+
+.wish-card:last-child {
+  border-bottom: none;
+}
+
+.wish-card-name {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-gold-bright);
+}
+
+.wish-card-meta {
+  font-size: 11px;
+  color: var(--color-cream-soft);
+  margin: 3px 0 8px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.wish-attendance-tag {
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wish-attendance-tag--hadir {
+  background: rgba(201, 162, 39, 0.16);
+  color: var(--color-gold-bright);
+}
+
+.wish-attendance-tag--tidak_hadir {
+  background: rgba(155, 68, 68, 0.22);
+  color: #d98686;
+}
+
+.wish-attendance-tag--ragu {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-cream-soft);
+}
+
+.wish-card-message {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--color-cream-soft);
+}
+
+.wish-list {
+  max-height: 340px;
+  overflow-y: auto;
+  margin-top: 30px;
+  padding-right: 4px;
+}
+
+/* ==========================================================================
+   CLOSING
+   ========================================================================== */
+.closing {
+  text-align: center;
+  overflow: hidden;
+}
+
+.closing-gapura {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.7;
+}
+
+.closing-content {
+  position: relative;
+  z-index: 1;
+}
+
+.closing-names {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 38px;
+  letter-spacing: 0.04em;
+  color: var(--color-gold-bright);
+  margin: 16px 0 30px;
+}
+
+.closing-credit {
+  margin-top: 60px;
+  font-size: 11px;
+  color: var(--color-cream-soft);
+  line-height: 1.8;
+}
+
+.closing-credit code {
+  color: var(--color-gold-bright);
+}
+
+/* ==========================================================================
+   DOT NAVIGATION
+   ========================================================================== */
+.dot-nav {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 540px) {
+  .dot-nav {
+    right: max(14px, calc((100vw - var(--frame-width)) / 2 + 14px));
+  }
+}
+
+.dot-nav-item {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1px solid var(--color-gold);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.dot-nav-item[data-active="true"] {
+  background: var(--color-gold);
+  transform: scale(1.3);
+}
+
+/* ==========================================================================
+   MUSIC TOGGLE
+   ========================================================================== */
+.music-toggle {
+  position: fixed;
+  left: 14px;
+  bottom: 18px;
+  z-index: 40;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--color-hairline);
+  background: var(--color-charcoal);
+  color: var(--color-gold-bright);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.7);
+}
+
+@media (min-width: 540px) {
+  .music-toggle {
+    left: max(14px, calc((100vw - var(--frame-width)) / 2 + 14px));
+  }
+}
+
+.music-toggle[data-playing="true"] {
+  animation: music-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes music-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(201, 162, 39, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(201, 162, 39, 0);
+  }
+}
+
+/* ==========================================================================
+   MISC
+   ========================================================================== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

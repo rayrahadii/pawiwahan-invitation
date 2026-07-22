@@ -1,0 +1,10 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5174:5173"
+    volumes:
+      - .:/app # live-mount source code so edits on the host hot-reload in the container
+      - /app/node_modules # keep the container's own node_modules (don't shadow with the host's)
+    environment:
+      - CHOKIDAR_USEPOLLING=true
