@@ -9,7 +9,7 @@ import type { InvitationData } from "../types";
  * ============================================================
  */
 export const invitationData: InvitationData = {
-  brideNickname: "Kadek",
+  brideNickname: "Intan",
   groomNickname: "Wira",
   brideFullName: "Ni Kadek Ayu Larasati",
   groomFullName: "I Made Wira Kusuma",
@@ -25,10 +25,8 @@ export const invitationData: InvitationData = {
   // Kutipan generik (tidak merujuk ke kitab suci tertentu) supaya bisa
   // dipakai lintas keyakinan — ganti dengan ayat/petuah pilihanmu bila perlu.
   quote: {
-    lead:
-      "Seperti akar pohon beringin yang saling menjalin di bawah tanah, begitu pula cinta yang tulus mengikat dua hati menjadi satu.",
-    body:
-      "Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk turut hadir dan memberikan doa restu bagi perjalanan baru kami.",
+    lead: "Seperti akar pohon beringin yang saling menjalin di bawah tanah, begitu pula cinta yang tulus mengikat dua hati menjadi satu.",
+    body: "Dengan penuh syukur, kami mengundang Bapak/Ibu/Saudara/i untuk turut hadir dan memberikan doa restu bagi perjalanan baru kami.",
     source: "",
   },
 
