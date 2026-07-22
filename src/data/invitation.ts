@@ -15,8 +15,10 @@ export const invitationData: InvitationData = {
   groomFullName: "Kadek Wira Arya Dharma",
   brideParents: "Putri dari Bapak ..... & Ibu .....",
   groomParents: "Putra dari Bapak ..... & Ibu .....",
-  brideInstagram: "https://instagram.com/",
-  groomInstagram: "https://instagram.com/",
+  brideInstagram:
+    "https://www.instagram.com/intanpradiska?igsh=eHN0MDY2MWVnenh1",
+  groomInstagram:
+    "https://www.instagram.com/wiraarya_d?igsh=MW53OGFnbGQ0MzF4aQ==",
 
   // Tanggal target untuk hitung mundur (format ISO, sesuaikan zona waktu)
   targetDate: "2026-11-14T08:00:00+08:00",

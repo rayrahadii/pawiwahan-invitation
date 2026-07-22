@@ -18,7 +18,7 @@ export function Cover({ guestName, onOpen }: CoverProps) {
     >
       {/* Portrait background photo with dark overlay */}
       <div className="cover-bg">
-        <img src="/images/cover-bg.jpg" alt="" className="cover-bg-img" />
+        <img src="/images/cover.jpeg" alt="" className="cover-bg-img" />
         <div className="cover-bg-overlay" />
       </div>
 

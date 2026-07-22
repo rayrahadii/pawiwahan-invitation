@@ -19,21 +19,24 @@ export function Closing() {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i sekalian, kami mengucapkan
-          terima kasih yang sebesar-besarnya.
+          Atas kehadiran dan doa restu Bapak/Ibu/Saudara/i sekalian, kami
+          mengucapkan terima kasih yang sebesar-besarnya.
         </motion.p>
-        <p style={{ marginTop: 20, fontSize: 13, letterSpacing: "0.1em", color: "var(--color-cream-soft)" }}>
+        <p
+          style={{
+            marginTop: 20,
+            fontSize: 13,
+            letterSpacing: "0.1em",
+            color: "var(--color-cream-soft)",
+          }}
+        >
           Hormat kami,
         </p>
         <h2 className="closing-names">
           {brideNickname} &amp; {groomNickname}
         </h2>
 
-        <p className="closing-credit">
-          Dibuat dengan ❤ menggunakan React + Vite
-          <br />
-          Ganti seluruh teks di atas melalui <code>src/data/invitation.ts</code>
-        </p>
+        <p className="closing-credit">Dibuat dengan ❤</p>
       </div>
     </section>
   );
